@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Telegram Mini App Test</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  button { padding: 10px 20px; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Telegram Mini App Test</h1>
+
+<div id="user-info"></div>
+
+<button id="sendDataBtn">Send Data to Bot</button>
+
+<script>
+  const tg = window.Telegram.WebApp;
+
+  // Display Telegram user info
+  const userInfoDiv = document.getElementById('user-info');
+  const user = tg.initDataUnsafe?.user;
+  if (user) {
+    userInfoDiv.innerHTML = `<p>Hello, <b>${user.first_name}</b>!</p>`;
+  } else {
+    userInfoDiv.innerHTML = `<p>Unable to get user info.</p>`;
+  }
+
+  document.getElementById('sendDataBtn').addEventListener('click', () => {
+    tg.sendData("Hello from Mini App! User: " + (user ? user.id : 'unknown'));
+    tg.close();  // Close Mini App window
+  });
+</script>
+
+</body>
+</html>
